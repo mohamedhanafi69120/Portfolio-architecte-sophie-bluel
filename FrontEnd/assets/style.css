@@ -170,6 +170,7 @@ nav ul {
 nav li {
   padding: 0 10px;
   font-size: 1.2em;
+  color: black;
 }
 li a:hover {
   color: #b1663c;
