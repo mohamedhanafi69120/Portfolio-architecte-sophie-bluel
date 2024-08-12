@@ -170,7 +170,6 @@ nav ul {
 nav li {
   padding: 0 10px;
   font-size: 1.2em;
-  color: black;
 }
 li a:hover {
   color: #b1663c;
@@ -310,4 +309,51 @@ footer nav ul {
 
 .login__form label {
   margin: 3em 0 1em 0;
+}
+/******Style mode edition******/
+.topbar {
+  width: 100%;
+  height: 59px;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.topbar_edit {
+  font-family: "work Sans";
+  font-size: 1.5em;
+  font-weight: 400;
+  color: #fff;
+}
+.topbar .fa-pen-to-square {
+  color: #fff;
+  font-size: 1.5em;
+  margin-right: 1em;
+}
+
+/*******mise en place du lien d'acces a la modal*****/
+.modifier {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1em;
+  padding: 5px 10px;
+  position: relative;
+}
+.modifier .fa-pen-to-square {
+  color: #000;
+  font-size: 1.2em;
+  padding-right: 0.5em;
+}
+.btnmodal {
+  width: 84px;
+  height: 16px;
+  font-family: "work Sans";
+  font-size: 1.2em;
+  font-weight: 400;
+  color: #000;
+  display: flex;
+  position: absolute;
+  top: 10px;
+  left: 675px;
 }
