@@ -118,3 +118,43 @@ function EditMode() {
   }
 }
 EditMode();
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Code pour ouvrir le modal
+  const openModalButton = document.querySelector(".btnmodal");
+  const modal = document.getElementById("modal");
+  const modalCloseButtons = document.querySelectorAll(
+    ".modal-close, #arrow-return"
+  );
+
+  if (openModalButton) {
+    openModalButton.addEventListener("click", function () {
+      modal.style.display = "flex";
+      document.getElementById("modal-works").style.display = "block";
+    });
+  }
+
+  modalCloseButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      modal.style.display = "none";
+    });
+  });
+
+  modal.addEventListener("click", function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Nouveau code pour gérer le bouton "Ajouter une photo"
+  const addPhotoButton = document.getElementById("modal-edit-add");
+  const modalGallery = document.getElementById("modal-works");
+  const modalEdit = document.getElementById("modal-edit");
+
+  if (addPhotoButton && modalGallery && modalEdit) {
+    addPhotoButton.addEventListener("click", function () {
+      modalGallery.style.display = "none"; // Masque la galerie photo
+      modalEdit.style.display = "block"; // Affiche la section pour ajouter une photo
+    });
+  }
+});
