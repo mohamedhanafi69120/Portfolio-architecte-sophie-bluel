@@ -1,32 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const loginLink = document.querySelector("#nav-login"); // Lien pour "login" ou "logout"
+  // const loginLink = document.querySelector("#nav-login"); // Lien pour "login" ou "logout"
   const gallery = document.querySelector(".gallery");
   const categoriesContainer = document.querySelector("#categories");
 
   // Vérifier si le token est présent dans le localStorage
   const token = localStorage.getItem("authToken");
-
-  // Gestion de l'affichage du lien en fonction de la page
-  if (loginLink) {
-    if (window.location.pathname.endsWith("index.html")) {
-      // Page d'accueil : afficher "logout" si connecté, sinon "login"
-      if (token) {
-        loginLink.textContent = "logout";
-        loginLink.href = "#"; // Désactiver le lien par défaut
-        loginLink.addEventListener("click", function () {
-          localStorage.removeItem("authToken"); // Supprimer le token
-          window.location.href = "login.html"; // Rediriger vers la page de connexion
-        });
-      } else {
-        loginLink.textContent = "login";
-        loginLink.href = "login.html";
-      }
-    } else if (window.location.pathname.endsWith("login.html")) {
-      // Page de connexion : afficher "login" même après la connexion
-      loginLink.textContent = "login";
-      loginLink.href = "login.html";
-    }
-  }
 
   //****Fonction pour récupérer et afficher les projets****//
 

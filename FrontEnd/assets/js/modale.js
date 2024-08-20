@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const modalEdit = document.getElementById("modal-edit");
   const categorySelect = document.getElementById("form-category");
   const imageInput = document.getElementById("form-image");
+  const titleInput = document.getElementById("form-title");
+  const submitButton = document.getElementById("submit-new-work");
   const previewContainer = document.getElementById("modal-edit-new-photo");
   const form = document.getElementById("modal-edit-work-form");
 
@@ -46,6 +48,81 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Erreur lors du chargement des catégories :", error)
       );
   }
+
+  // Fonction pour afficher la galerie dans la modale
+  function displayModalGallery() {
+    const galleryContainer = document.querySelector(".modal-content");
+    galleryContainer.innerHTML = ""; // Réinitialiser la galerie modale
+
+    fetch("http://localhost:5678/api/works")
+      .then((response) => response.json())
+      .then((works) => {
+        works.forEach((work) => {
+          const figure = document.createElement("figure");
+          figure.classList.add("miniWork");
+
+          const img = document.createElement("img");
+          img.src = work.imageUrl;
+          img.alt = work.title;
+
+          const figcaption = document.createElement("figcaption");
+          figcaption.textContent = "éditer";
+
+          const deleteIcon = document.createElement("i");
+          deleteIcon.classList.add("fa-solid", "fa-trash-can");
+          deleteIcon.setAttribute("data-id", work.id);
+          deleteIcon.addEventListener("click", function () {
+            deletePhoto(work.id);
+          });
+
+          figure.appendChild(img);
+          figure.appendChild(figcaption);
+          figure.appendChild(deleteIcon);
+
+          galleryContainer.appendChild(figure);
+        });
+      });
+  }
+
+  // Appeler la fonction pour afficher la galerie modale
+  displayModalGallery();
+
+  // Fonction pour supprimer une photo
+  function deletePhoto(id) {
+    fetch(`http://localhost:5678/api/works/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erreur lors de la suppression de l'image");
+        }
+        // Retirer la photo de la galerie modale
+        document.querySelector(`figure[data-id='${id}']`).remove();
+      })
+      .catch((error) => console.error("Erreur :", error));
+  }
+
+  // Fonction pour valider le formulaire et activer le bouton "Valider"
+  function validateForm() {
+    const isImageSelected = imageInput.files.length > 0;
+    const isTitleFilled = titleInput.value.trim() !== "";
+    const isCategorySelected = categorySelect.value.trim() !== "";
+
+    if (isImageSelected && isTitleFilled && isCategorySelected) {
+      submitButton.disabled = false;
+      submitButton.style.backgroundColor = "#1d6154"; // Exemple de couleur verte
+    } else {
+      submitButton.disabled = true;
+      submitButton.style.backgroundColor = "#ccc"; // Exemple de couleur grise
+    }
+  }
+
+  imageInput.addEventListener("change", validateForm);
+  titleInput.addEventListener("input", validateForm);
+  categorySelect.addEventListener("change", validateForm);
 
   // Gestion de la prévisualisation de l'image sélectionnée
   imageInput.addEventListener("change", () => {

@@ -617,3 +617,16 @@ select {
   background-color: #a7a7a7;
   cursor: pointer;
 }
+button#valider {
+  background-color: #1d6154;
+  color: #ffffff; /* Couleur du texte en blanc */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button#valider:disabled {
+  background-color: #ccc; /* Couleur grisée lorsque désactivé */
+  cursor: not-allowed;
+}
