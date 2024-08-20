@@ -1,233 +1,254 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const addPhotoButton = document.getElementById("modal-edit-add");
-  const modalGallery = document.getElementById("modal-works");
-  const modalEdit = document.getElementById("modal-edit");
-  const categorySelect = document.getElementById("form-category");
-  const imageInput = document.getElementById("form-image");
-  const titleInput = document.getElementById("form-title");
-  const submitButton = document.getElementById("submit-new-work");
-  const previewContainer = document.getElementById("modal-edit-new-photo");
-  const form = document.getElementById("modal-edit-work-form");
+// /****étapes N° 1 - Gestion de la première modale (apparition/disparition)***/
 
-  // Vérifiez que les éléments existent avant d'ajouter des événements
-  if (addPhotoButton && modalGallery && modalEdit) {
-    addPhotoButton.addEventListener("click", function () {
-      modalGallery.style.display = "none"; // Masque la galerie photo
-      modalEdit.style.display = "block"; // Affiche la section pour ajouter une photo
+// //***bouton "Modifier" *****//
+// const modifierBtn = document.querySelector(".btnmodal");
+// /*récupération du container du modal***/
+// const modal1 = document.querySelector(".modal1");
+// const modal2 = document.querySelector(".modal2");
+// //  bouton de fermeture
+// const closeBtn = document.querySelector(".fa-xmark");
+// /*********overlay***********/
+// const overlay = document.querySelector(".overlay");
 
-      // Charger les catégories lors de l'ouverture du modal
-      fetchCategories();
-    });
-  }
+// /****récupération du bouton d'appel a la seconde modal2****/
+// const modal1btn = document.querySelector(".modal1-btn");
 
-  // Gestion de la fermeture de la fenêtre d'ajout de photo et retour à la galerie
-  const backButton = document.getElementById("arrow-return");
-  if (backButton) {
-    backButton.addEventListener("click", function () {
-      closeEditModal(); // Appel à une fonction pour réinitialiser et fermer la modale
-    });
-  }
+// // bouton "Modifier"
+// modifierBtn.addEventListener("click", () => {
+//   modal1.style.visibility = "visible";
+//   overlay.style.display = "flex";
+//   generateModalGallery();
+// });
+// /*******bouton ajout photo*******/
+// modal1btn.addEventListener("click", () => {
+//   modal2.style.display = "flex";
+// });
 
-  // Fonction pour récupérer et afficher les catégories dans le menu déroulant
-  function fetchCategories() {
-    fetch("http://localhost:5678/api/categories")
-      .then((response) => response.json())
-      .then((categories) => {
-        // Vider les options existantes
-        categorySelect.innerHTML = '<option value=""></option>';
+// //  bouton de fermeture
+// closeBtn.addEventListener("click", function () {
+//   modal1.style.display = "none";
+// });
+// //  fermeture au click sur overlay***/
+// overlay.addEventListener("click", function () {
+//   modal1.style.display = "none";
+// });
 
-        // Ajouter chaque catégorie comme option
-        categories.forEach((category) => {
-          const option = document.createElement("option");
-          option.value = category.id;
-          option.textContent = category.name;
-          categorySelect.appendChild(option);
-        });
-      })
-      .catch((error) =>
-        console.error("Erreur lors du chargement des catégories :", error)
-      );
-  }
+// //****étapes N°-2 **Génération de la galerie dans la première modale****//
 
-  // Fonction pour afficher la galerie dans la modale
-  function displayModalGallery() {
-    const galleryContainer = document.querySelector(".modal-content");
-    galleryContainer.innerHTML = ""; // Réinitialiser la galerie modale
+// // Fonction pour générer la galerie à l'intérieur de la première modale
 
-    fetch("http://localhost:5678/api/works")
-      .then((response) => response.json())
-      .then((works) => {
-        works.forEach((work) => {
-          const figure = document.createElement("figure");
-          figure.classList.add("miniWork");
+// async function generateModalGallery() {
+//   try {
+//     const response = await fetch("http://localhost:5678/api/works/");
+//     if (!response.ok) {
+//       throw new Error("Erreur lors de la récupération des travaux");
+//     }
+//     const works = await response.json();
 
-          const img = document.createElement("img");
-          img.src = work.imageUrl;
-          img.alt = work.title;
+//     const modal1_photo = document.querySelector(".modal1_photo");
+//     modal1_photo.innerHTML = "";
 
-          const figcaption = document.createElement("figcaption");
-          figcaption.textContent = "éditer";
+//     works.forEach((work) => {
+//       const figure = document.createElement("figure");
+//       const imageContainer = document.createElement("div");
+//       imageContainer.classList.add("image-container");
 
-          const deleteIcon = document.createElement("i");
-          deleteIcon.classList.add("fa-solid", "fa-trash-can");
-          deleteIcon.setAttribute("data-id", work.id);
-          deleteIcon.addEventListener("click", function () {
-            deletePhoto(work.id);
-          });
+//       const img = document.createElement("img");
+//       img.src = work.imageUrl;
+//       img.classList.add("modal1-vignette");
 
-          figure.appendChild(img);
-          figure.appendChild(figcaption);
-          figure.appendChild(deleteIcon);
+//       const iconContainer = document.createElement("div");
+//       iconContainer.classList.add("icon-container");
 
-          galleryContainer.appendChild(figure);
-        });
-      });
-  }
+//       const deleteIcon = document.createElement("i");
+//       deleteIcon.classList.add(
+//         "delete-icon",
+//         "fa-solid",
+//         "fa-trash-can",
+//         "delete-icon-modal1"
+//       );
 
-  // Appeler la fonction pour afficher la galerie modale
-  displayModalGallery();
+//       deleteIcon.addEventListener("click", function () {
+//         let workId = work.id;
+//         deleteWork(workId, true);
+//       });
 
-  // Fonction pour supprimer une photo
-  function deletePhoto(id) {
-    fetch(`http://localhost:5678/api/works/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erreur lors de la suppression de l'image");
-        }
-        // Retirer la photo de la galerie modale
-        document.querySelector(`figure[data-id='${id}']`).remove();
-      })
-      .catch((error) => console.error("Erreur :", error));
-  }
+//       iconContainer.appendChild(deleteIcon);
+//       imageContainer.appendChild(iconContainer);
+//       imageContainer.appendChild(img);
 
-  // Fonction pour valider le formulaire et activer le bouton "Valider"
-  function validateForm() {
-    const isImageSelected = imageInput.files.length > 0;
-    const isTitleFilled = titleInput.value.trim() !== "";
-    const isCategorySelected = categorySelect.value.trim() !== "";
+//       figure.appendChild(imageContainer);
+//       modal1_photo.appendChild(figure);
+//     });
 
-    if (isImageSelected && isTitleFilled && isCategorySelected) {
-      submitButton.disabled = false;
-      submitButton.style.backgroundColor = "#1d6154"; // Exemple de couleur verte
-    } else {
-      submitButton.disabled = true;
-      submitButton.style.backgroundColor = "#ccc"; // Exemple de couleur grise
-    }
-  }
+//     updateHomePage();
+//   } catch (error) {
+//     console.error("Erreur lors de la génération de la galerie :", error);
+//   }
+// }
 
-  imageInput.addEventListener("change", validateForm);
-  titleInput.addEventListener("input", validateForm);
-  categorySelect.addEventListener("change", validateForm);
+// //***étapes N°-3 *********Suppression des travaux existants *****//
 
-  // Gestion de la prévisualisation de l'image sélectionnée
-  imageInput.addEventListener("change", () => {
-    const file = imageInput.files[0];
-    const maxFileSize = 4 * 1024 * 1024; // Taille maximale du fichier : 4 Mo
-    if (file.size > maxFileSize) {
-      alert(
-        "Le fichier sélectionné est trop volumineux. La taille maximale est de 4 Mo."
-      );
-      imageInput.value = ""; // Réinitialiser l'input file
-    } else if (file) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const imgPreview = document.createElement("img");
-        imgPreview.src = e.target.result;
-        imgPreview.id = "form-image-preview";
-        imgPreview.style.maxHeight = "169px"; // Ajustez la hauteur comme sur l'image
-        imgPreview.style.width = "auto";
-        imgPreview.style.display = "block";
-        imgPreview.style.margin = "0 auto";
+// // Fonction pour supprimer un travail avec l'ID
 
-        // Supprimer l'ancienne prévisualisation, s'il y en a une
-        const oldPreview = document.getElementById("form-image-preview");
-        if (oldPreview) {
-          oldPreview.remove();
-        }
+// function deleteWork(workId, updateGallery) {
+//   const token = localStorage.getItem("authToken");
+//   if (!token) {
+//     alert("Vous devez être connecté pour effectuer cette action.");
+//     return;
+//   }
 
-        // Ajouter l'image prévisualisée à la zone de prévisualisation
-        previewContainer.innerHTML = ""; // Effacer les anciens contenus
-        previewContainer.appendChild(imgPreview);
+//   fetch(`http://localhost:5678/api/works/${workId}`, {
+//     method: "DELETE",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//       Accept: "application/json",
+//       "Content-Type": "application/json",
+//     },
+//   })
+//     .then((response) => {
+//       if (!response.ok) {
+//         if (response.status === 401) {
+//           alert("Non autorisé. Veuillez vous reconnecter.");
+//         }
+//         throw new Error(`HTTP error! Status: ${response.status}`);
+//       }
+//       return response.text();
+//     })
+//     .then(() => {
+//       const modalWorkFigure = document.querySelector(
+//         `figure[data-work-id="${workId}"]`
+//       );
 
-        // Cacher l'icône et le texte + Ajouter photo
-        document.getElementById("photo-add-icon").style.display = "none";
-        document.getElementById("new-image").style.display = "none";
-        document.getElementById("photo-size").style.display = "none";
-      };
-      reader.readAsDataURL(file);
-    }
-  });
+//       if (modalWorkFigure) {
+//         modalWorkFigure.remove();
+//       }
+//       if (updateGallery) {
+//         generateModalGallery();
+//       }
+//     })
+//     .catch((error) =>
+//       console.error("Erreur lors de la suppression du travail :", error)
+//     );
+// }
 
-  // Gestion de la soumission du formulaire
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+//*****************new code *****************//
 
-    const formData = new FormData(form);
+/****-1- Gestion de la première modale (apparition/disparition)***/
 
-    fetch("http://localhost:5678/api/works", {
-      method: "POST", // Utilisez la méthode POST
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Assurez-vous que le token est bien passé
-      },
-      body: formData, // Envoyez les données du formulaire
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erreur lors de l'ajout de l'image");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data && data.id && data.imageUrl && data.title) {
-          // Ajouter la nouvelle image à la galerie
-          const gallery = document.querySelector(".gallery");
+//***bouton "Modifier" *****//
+const modifierBtn = document.querySelector(".btnmodal");
+/*récupération du container du modal***/
+const container = document.querySelector(".modal_container");
 
-          const figure = document.createElement("figure");
-          figure.setAttribute("id", `work-item-${data.id}`);
-          figure.classList.add(`category-id-${data.categoryId}`);
+//  bouton de fermeture
+const closeBtn = document.querySelector(".fa-xmark");
 
-          const img = document.createElement("img");
-          img.src = data.imageUrl;
-          img.alt = data.title;
-
-          const figcaption = document.createElement("figcaption");
-          figcaption.textContent = data.title;
-
-          figure.appendChild(img);
-          figure.appendChild(figcaption);
-
-          // Ajouter l'image à la galerie
-          gallery.appendChild(figure);
-
-          // Réinitialiser et fermer la modale
-          closeEditModal();
-        } else {
-          console.error("Les données reçues sont incorrectes :", data);
-        }
-      })
-      .catch((error) => console.error("Erreur :", error));
-  });
-
-  // Fonction pour fermer la modale et réinitialiser le formulaire
-  function closeEditModal() {
-    modalEdit.style.display = "none";
-    modalGallery.style.display = "block"; // Réaffiche la galerie photo
-
-    // Réinitialiser le formulaire
-    form.reset();
-    const oldPreview = document.getElementById("form-image-preview");
-    if (oldPreview) {
-      oldPreview.remove();
-    }
-
-    // Réafficher les éléments cachés
-    document.getElementById("photo-add-icon").style.display = "block";
-    document.getElementById("new-image").style.display = "block";
-    document.getElementById("photo-size").style.display = "block";
-  }
+// bouton "Modifier"
+modifierBtn.addEventListener("click", function () {
+  container.style.display = "flex";
+  generateModalGallery();
 });
+
+//  bouton de fermeture
+closeBtn.addEventListener("click", function () {
+  container.style.display = "none";
+});
+
+//****-2-**Génération de la galerie dans la première modale *//
+// Fonction pour générer la galerie à l'intérieur de la première modale
+
+async function generateModalGallery() {
+  try {
+    const response = await fetch("http://localhost:5678/api/works/");
+    if (!response.ok) {
+      throw new Error("Erreur lors de la récupération des travaux");
+    }
+    const works = await response.json();
+
+    const modal1_photo = document.querySelector(".modal1_photo");
+    modal1_photo.innerHTML = "";
+
+    works.forEach((work) => {
+      const figure = document.createElement("figure");
+      const imageContainer = document.createElement("div");
+      imageContainer.classList.add("image-container");
+
+      const img = document.createElement("img");
+      img.src = work.imageUrl;
+      img.classList.add("modal1-vignette");
+
+      const iconContainer = document.createElement("div");
+      iconContainer.classList.add("icon-container");
+
+      const deleteIcon = document.createElement("i");
+      deleteIcon.classList.add(
+        "delete-icon",
+        "fa-solid",
+        "fa-trash-can",
+        "delete-icon-modal1"
+      );
+
+      deleteIcon.addEventListener("click", function () {
+        let workId = work.id;
+        deleteWork(workId, true);
+      });
+
+      iconContainer.appendChild(deleteIcon);
+      imageContainer.appendChild(iconContainer);
+      imageContainer.appendChild(img);
+
+      figure.appendChild(imageContainer);
+      modal1_photo.appendChild(figure);
+    });
+
+    updateHomePage();
+  } catch (error) {
+    console.error("Erreur lors de la génération de la galerie :", error);
+  }
+}
+
+//***-3-*********Suppression des travaux existants *****//
+
+// Fonction pour supprimer un travail avec l'ID
+
+function deleteWork(workId, updateGallery) {
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    alert("Vous devez être connecté pour effectuer cette action.");
+    return;
+  }
+
+  fetch(`http://localhost:5678/api/works/${workId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          alert("Non autorisé. Veuillez vous reconnecter.");
+        }
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(() => {
+      const modalWorkFigure = document.querySelector(
+        `figure[data-work-id="${workId}"]`
+      );
+
+      if (modalWorkFigure) {
+        modalWorkFigure.remove();
+      }
+      if (updateGallery) {
+        generateModalGallery();
+      }
+    })
+    .catch((error) =>
+      console.error("Erreur lors de la suppression du travail :", error)
+    );
+}

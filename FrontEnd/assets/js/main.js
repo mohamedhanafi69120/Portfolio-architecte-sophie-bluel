@@ -1,12 +1,184 @@
+// /*********************login- logout******************************/
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   const loginLink = document.querySelector("#nav-login"); // Lien pour "login" ou "logout"
+//   const gallery = document.querySelector(".gallery");
+//   const categoriesContainer = document.querySelector("#categories");
+
+//   // Vérifier si le token est présent dans le localStorage
+//   const token = localStorage.getItem("authToken");
+
+//   // Gestion de l'affichage du lien en fonction de la page
+//   if (loginLink) {
+//     if (window.location.pathname.endsWith("index.html")) {
+//       // Page d'accueil : afficher "logout" si connecté, sinon "login"
+//       if (token) {
+//         loginLink.textContent = "logout";
+//         loginLink.href = "#"; // Désactiver le lien par défaut
+//         loginLink.addEventListener("click", function () {
+//           localStorage.removeItem("authToken"); // Supprimer le token
+//           window.location.href = "login.html"; // Rediriger vers la page de connexion
+//         });
+//       } else {
+//         loginLink.textContent = "login";
+//         loginLink.href = "login.html";
+//       }
+//     } else if (window.location.pathname.endsWith("login.html")) {
+//       // Page de connexion : afficher "login" même après la connexion
+//       loginLink.textContent = "login";
+//       loginLink.href = "login.html";
+//     }
+//   }
+
+//   //**************Récupération des traveaux************//
+//   //*****Fonction pour récupérer et afficher les projets****//
+
+//   function fetchAndDisplayProjects(filterCategory = null) {
+//     fetch("http://localhost:5678/api/works")
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+//         return response.json();
+//       })
+//       .then((data) => {
+//         console.log("data:", data);
+//         gallery.innerHTML = ""; // Clear existing content
+
+//         data.forEach((work) => {
+//           if (!filterCategory || work.categoryId === filterCategory) {
+//             const figure = document.createElement("figure");
+//             const img = document.createElement("img");
+//             img.src = work.imageUrl;
+//             img.alt = work.title;
+
+//             const figcaption = document.createElement("figcaption");
+//             figcaption.textContent = work.title;
+
+//             figure.appendChild(img);
+//             figure.appendChild(figcaption);
+//             gallery.appendChild(figure);
+//           }
+//         });
+//       })
+//       .catch((error) => console.error("Error:", error));
+//   }
+
+//   //********Récupération des catégories**********//
+//   //*****Fonction pour récupérer et afficher les catégories******//
+
+//   function fetchAndDisplayCategories() {
+//     fetch("http://localhost:5678/api/categories")
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+//         return response.json();
+//       })
+//       .then((categories) => {
+//         console.log("les categories:", categories);
+
+//         // Ajouter le bouton "Tous" pour afficher tous les projets
+//         const allButton = document.createElement("button");
+//         allButton.textContent = "Tous";
+//         allButton.addEventListener("click", () => fetchAndDisplayProjects());
+//         categoriesContainer.appendChild(allButton);
+
+//         // Ajouter des boutons pour chaque catégorie
+//         categories.forEach((category) => {
+//           const button = document.createElement("button");
+//           button.textContent = category.name;
+//           button.addEventListener("click", () =>
+//             fetchAndDisplayProjects(category.id)
+//           );
+//           categoriesContainer.appendChild(button);
+//         });
+
+//         // // Appeler la fonction pour remplir les catégories dans le formulaire d'ajout de photo
+//         // populateCategories(categories);
+//       })
+//       .catch((error) => console.error("Error:", error));
+//   }
+
+//   //   //****Fonction pour remplir les catégories dans le formulaire d'ajout de photo*****//
+
+//   //   function populateCategories(categories) {
+//   //     const categorySelect = document.getElementById("photo-category");
+//   //     categorySelect.innerHTML =
+//   //       '<option value="" disabled selected>Sélectionnez une catégorie</option>';
+
+//   //     categories.forEach((category) => {
+//   //       const option = document.createElement("option");
+//   //       option.value = category.name;
+//   //       option.textContent = category.name;
+//   //       categorySelect.appendChild(option);
+//   //     });
+//   //   }
+
+//   //   // Initial fetch pour afficher tous les projets et les catégories
+//   //   if (gallery && categoriesContainer) {
+//   //     fetchAndDisplayProjects();
+//   //     fetchAndDisplayCategories();
+//   //   }
+//   // });
+
+//   //******affichage des éléments en mode édition******//
+
+//   function EditMode() {
+//     const token = localStorage.getItem("authToken");
+//     const categories = document.querySelector("#categories");
+//     const topbar = document.querySelector(".topbar");
+//     const modifier = document.querySelector(".btnmodal");
+
+//     console.log(categories);
+//     console.log("verfitoken:", token);
+
+//     if (token) {
+//       categories.style.display = "none";
+//       topbar.style.display = "flex";
+//       modifier.style.display = "flex";
+//     } else {
+//       categories.style.display = "block";
+//       topbar.style.display = "none";
+//       modifier.style.display = "none";
+//     }
+//   }
+//   EditMode();
+// });
+
+/*********************login- logout******************************/
+
 document.addEventListener("DOMContentLoaded", function () {
-  // const loginLink = document.querySelector("#nav-login"); // Lien pour "login" ou "logout"
+  const loginLink = document.querySelector("#nav-login"); // Lien pour "login" ou "logout"
   const gallery = document.querySelector(".gallery");
   const categoriesContainer = document.querySelector("#categories");
 
   // Vérifier si le token est présent dans le localStorage
   const token = localStorage.getItem("authToken");
 
-  //****Fonction pour récupérer et afficher les projets****//
+  // Gestion de l'affichage du lien en fonction de la page
+  if (loginLink) {
+    if (window.location.pathname.endsWith("index.html")) {
+      // Page d'accueil : afficher "logout" si connecté, sinon "login"
+      if (token) {
+        loginLink.textContent = "logout";
+        loginLink.href = "#"; // Désactiver le lien par défaut
+        loginLink.addEventListener("click", function () {
+          localStorage.removeItem("authToken"); // Supprimer le token
+          window.location.href = "login.html"; // Rediriger vers la page de connexion
+        });
+      } else {
+        loginLink.textContent = "login";
+        loginLink.href = "login.html";
+      }
+    } else if (window.location.pathname.endsWith("login.html")) {
+      // Page de connexion : afficher "login" même après la connexion
+      loginLink.textContent = "login";
+      loginLink.href = "login.html";
+    }
+  }
+
+  //*****Fonction pour récupérer et afficher les projets****//
 
   function fetchAndDisplayProjects(filterCategory = null) {
     fetch("http://localhost:5678/api/works")
@@ -39,7 +211,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => console.error("Error:", error));
   }
 
-  //********//Fonction pour récupérer et afficher les catégories//******//
+  //*****Fonction pour récupérer et afficher les catégories******//
+
   function fetchAndDisplayCategories() {
     fetch("http://localhost:5678/api/categories")
       .then((response) => {
@@ -50,6 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .then((categories) => {
         console.log("les categories:", categories);
+
         // Ajouter le bouton "Tous" pour afficher tous les projets
         const allButton = document.createElement("button");
         allButton.textContent = "Tous";
@@ -65,8 +239,26 @@ document.addEventListener("DOMContentLoaded", function () {
           );
           categoriesContainer.appendChild(button);
         });
+
+        // Appeler la fonction pour remplir les catégories dans le formulaire d'ajout de photo
+        populateCategories(categories);
       })
       .catch((error) => console.error("Error:", error));
+  }
+
+  //****Fonction pour remplir les catégories dans le formulaire d'ajout de photo*****//
+
+  function populateCategories(categories) {
+    const categorySelect = document.getElementById("photo-category");
+    categorySelect.innerHTML =
+      '<option value="" disabled selected>Sélectionnez une catégorie</option>';
+
+    categories.forEach((category) => {
+      const option = document.createElement("option");
+      option.value = category.name;
+      option.textContent = category.name;
+      categorySelect.appendChild(option);
+    });
   }
 
   // Initial fetch pour afficher tous les projets et les catégories
@@ -75,7 +267,9 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchAndDisplayCategories();
   }
 });
-/******affichage des élements en mode edition******/
+
+//******affichage des éléments en mode édition******//
+
 function EditMode() {
   const token = localStorage.getItem("authToken");
   const categories = document.querySelector("#categories");
@@ -96,43 +290,3 @@ function EditMode() {
   }
 }
 EditMode();
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Code pour ouvrir le modal
-  const openModalButton = document.querySelector(".btnmodal");
-  const modal = document.getElementById("modal");
-  const modalCloseButtons = document.querySelectorAll(
-    ".modal-close, #arrow-return"
-  );
-
-  if (openModalButton) {
-    openModalButton.addEventListener("click", function () {
-      modal.style.display = "flex";
-      document.getElementById("modal-works").style.display = "block";
-    });
-  }
-
-  modalCloseButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      modal.style.display = "none";
-    });
-  });
-
-  modal.addEventListener("click", function (event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-
-  // Nouveau code pour gérer le bouton "Ajouter une photo"
-  const addPhotoButton = document.getElementById("modal-edit-add");
-  const modalGallery = document.getElementById("modal-works");
-  const modalEdit = document.getElementById("modal-edit");
-
-  if (addPhotoButton && modalGallery && modalEdit) {
-    addPhotoButton.addEventListener("click", function () {
-      modalGallery.style.display = "none"; // Masque la galerie photo
-      modalEdit.style.display = "block"; // Affiche la section pour ajouter une photo
-    });
-  }
-});

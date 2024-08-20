@@ -63,12 +63,12 @@
       <section id="portfolio">
         <div class="modifier">
           <h2>Mes Projets</h2>
-          <a href="#" class="btnmodal"
-            ><i class="fa-regular fa-pen-to-square"></i>modifier
+          <a href="#" class="btnmodal">
+            <i class="fa-regular fa-pen-to-square"></i>modifier
           </a>
         </div>
         <div id="categories">
-          <!-- Les catégories seront ajoutées dynamiquement ici ------->
+          <!-- Les catégories seront ajoutées dynamiquement ici -->
         </div>
         <div class="gallery">
           <!-- Les projets seront ajoutés dynamiquement ici -->
@@ -88,66 +88,43 @@
         </form>
       </section>
       <!-- Creation modal -->
-      <div
-        id="modal"
-        class="modal-overlay"
-        aria-hidden="true"
-        role="dialog"
-        aria-labelledby="title-modal-overlay"
-      >
-        <div id="modal-works" class="modal-gallery">
-          <a id="button-to-close-first-window" href="#" class="modal-close"
-            ><i class="fa-solid fa-xmark"></i
-          ></a>
-          <h3 id="title-modal-overlay" class="modal-title">Galerie photo</h3>
-          <div class="modal-content work-container"></div>
-          <hr />
-          <div class="container-modal-add-and-modal-delete">
-            <button id="modal-edit-add" class="modal-add">
-              Ajouter une photo
-            </button>
-            <a href="#" class="modal-delete-all">Supprimer la galerie</a>
-          </div>
+      <div class="modal_container">
+        <div class="overlay"></div>
+        <div class="modal1">
+          <i class="fa-solid fa-xmark"></i>
+          <h2 class="modal1_title">Gallerie photos</h2>
+          <div class="modal1_photo"></div>
+          <div class="modal1_separation"></div>
+          <button class="modal1-btn">Ajouter une photos</button>
         </div>
-        <div id="modal-edit" class="modal-edit-work">
-          <div class="container-for-icon-in-second-window-of-modal">
-            <a id="arrow-return" href="#"
-              ><i class="fa-solid fa-arrow-left"></i
-            ></a>
-            <a id="button-to-close-second-window" href="#"
-              ><i class="fa-solid fa-xmark"></i
-            ></a>
-          </div>
-          <h3 class="modal-title">Ajout photo</h3>
-          <form id="modal-edit-work-form" method="post" action="#">
-            <div id="modal-edit-new-photo" class="modal-content-new-photo">
-              <i id="photo-add-icon" class="fa-regular fa-image"></i>
-              <label id="new-image">+ Ajouter photo</label>
+        <div class="modal2">
+          <i class="fa-solid fa-arrow-left"></i>
+          <i class="fa-solid fa-xmark"></i>
+          <h2>Ajout photos</h2>
+          <form>
+            <div class="modal2_setphoto">
+              <img src="#" alt="image prechargee" class="modal2img" />
+              <i class="fa-regular fa-image"></i>
+              <label id="uploadfile" class="modal2imagelabel"
+                >+ Ajouter photo</label
+              >
               <input
-                id="form-image"
-                type="file"
+                type="files"
+                id="uploadfile"
                 name="image"
-                accept="image/*, .jpg, .jpeg, .png"
+                accept=".jpg, .jpeg, .png"
                 required
               />
-              <p id="photo-size">jpg, png : 4mo max</p>
+              <span class="modal2_text">jpg, png: 4mo max</span>
             </div>
-            <div class="modal-content-new-category-title">
-              <label for="form-title">Titre</label>
-              <input
-                type="text"
-                name="title"
-                id="form-title"
-                value=""
-                required
-              />
-              <label for="form-category">Catégorie</label>
-              <select class="choice-category" id="form-category" required>
-                <option value=""></option>
-              </select>
-              <hr class="border-in-second-window-of-modal" />
-              <input type="submit" id="submit-new-work" value="Valider" />
-            </div>
+            <label for="title" class="title">titre</label>
+            <input type="text" id="title" name="title" required />
+            <label for="categories-select" class="categories-select"
+              >categories</label
+            >
+            <select name="categories" id="categories-select" required></select>
+            <div class="modal2_separation"></div>
+            <input type="submit" id="modal2_submit" value="valider" />
           </form>
         </div>
       </div>

@@ -1,8 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
+/* Reset CSS */
 html,
 body,
 div,
@@ -375,258 +371,203 @@ footer nav ul {
   font-size: 20px;
 }
 
-/*** CSS Modal ***/
+/*---------------fin code modale----------------*/
+.gallery figcaption {
+  margin-top: 5px;
+  font-size: 16px;
+  color: #333;
+  display: block;
+}
 
-.modal-overlay {
-  position: fixed;
-  display: none; /* Par défaut caché, sera géré via JavaScript */
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  top: 0;
-  left: 0;
+/********modal******/
+
+.modal_container {
   width: 100%;
   height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 1000; /* Assure que le modal est au-dessus des autres éléments */
+  display: none;
 }
-
-/* First window of modal, "modal-works" */
-
-.modal-gallery {
-  width: 44%;
-  height: 730px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  display: none; /* Par défaut caché, sera géré via JavaScript */
-}
-
-.modal-content {
+.modal1 {
+  width: 600px;
+  height: 670px;
+  background-color: #fff;
+  border-radius: 15px;
+  position: relative;
+  top: 4%;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 45px 90px 45px 100px;
-  gap: 10px;
-}
-
-.modal-content figure {
-  display: flex;
+  visibility: hidden;
   flex-direction: column;
 }
-
-.modal-content img {
-  width: 80px;
-}
-
-.modal-content .work-item .trash,
-.modal-content .work-item .cross {
-  margin-top: 5px;
-  color: #ffffff;
-  background: #000000;
-  border-radius: 2px;
-  text-align: center;
+.modal1 .fa-xmark {
+  font-size: 28px;
   position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}
+.modal1_title {
+  font-family: "Work sans";
+  font-size: 1.5em;
+  font-weight: 400;
+  text-align: center;
+  color: #000;
+  margin-top: 60px;
+}
+.modal1_photo {
+  width: 85%;
+  height: 60%;
+  margin: 45px auto 30px auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.modal1-vignette {
+  width: 80px;
+  height: 106px;
+  object-fit: cover; /* S'assure que l'image est correctement redimensionnée */
+}
+.modal1_separation {
+  width: 85%;
+  height: 2px;
+  background-color: #b3b3b3;
+  margin: 30px auto;
+}
+.modal1-btn {
+  width: 40%;
+  height: 45px;
+  border: none;
+  border-radius: 50px;
+  background-color: #1d6154;
+  font-family: "Syne";
+  font-size: 1.2em;
+  font-weight: 400;
+  color: #fff;
+  margin: 30px auto 30px auto;
+  cursor: pointer;
 }
 
-.modal-content .work-item .trash {
-  margin-left: 60px;
-  padding: 4px;
-  font-size: 9px;
+/* Styles pour la seconde modale (Ajout Photo) */
+.modalAjout {
+  display: none;
+  flex-direction: column;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  width: 90%;
+  z-index: 1000;
 }
 
-.modal-content .work-item .cross {
-  margin-left: 40px;
-  padding: 3.5px;
-  font-size: 10px;
+.modalAjout h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.modal-content .work-item .cross {
+.modalAjout .image-content {
+  background-color: #f4f4f4;
+  border: 2px dashed #c1c1c1;
+  border-radius: 5px;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.modalAjout input[type="file"] {
   display: none;
 }
 
-.modal-content .work-item:hover .cross {
-  display: flex;
+.modalAjout .fa-image {
+  font-size: 50px;
+  color: #c1c1c1;
 }
 
-.modal-content .work-item:hover {
-  cursor: pointer;
+.modalAjout label.photo {
+  font-size: 14px;
+  color: #c1c1c1;
 }
 
-.modal-content figcaption {
-  padding-top: 5px;
+.modalAjout label.discr {
+  font-size: 12px;
+  color: #c1c1c1;
 }
 
-.modal-close {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  padding-right: 30px;
-  padding-top: 30px;
-  font-size: 15px;
-  cursor: pointer;
+.modalAjout input[type="text"],
+.modalAjout select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
 }
 
-.modal-title {
-  font-size: 1.86em;
-  line-height: 30px;
-  text-align: center;
-  padding-top: 15px;
-}
-
-hr {
-  margin: 0 105px;
-  border-top: 1px solid #b3b3b3;
-  border-bottom: 0;
-  border-left: 0;
-  border-right: 0;
-}
-
-.container-modal-add-and-modal-delete {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 40px;
-}
-
-.modal-add {
-  border: none;
-  border-radius: 60px;
-  color: #ffffff;
-  padding: 10px 49px;
-  font-family: "Syne";
-  font-size: 1em;
-  font-weight: 700;
+.modalAjout input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
   background-color: #1d6154;
-  cursor: pointer;
-}
-
-.modal-delete-all {
-  font-size: 1em;
-  line-height: 17px;
-  color: #d65353;
-  padding-top: 20px;
-  cursor: pointer;
-}
-
-/* Second window of modal, "modal-edit" */
-
-.modal-edit-work {
-  width: 630px;
-  height: 670px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  display: none; /* Par défaut caché, sera géré via JavaScript */
-}
-
-.modal-edit-work .container-for-icon-in-second-window-of-modal {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 30px 30px 0 30px;
-  font-size: 15px;
-}
-
-#modal-edit-work-form .modal-content-new-photo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px 0 19px 0;
-  background-color: #e8f1f7;
-  border-radius: 3px;
-  margin: 35px 105px 0 105px;
-}
-
-.modal-content-new-photo i {
-  font-size: 58px;
-  color: #b9c5cc;
-  padding-bottom: 20px;
-}
-
-.modal-content-new-photo #new-image {
-  background-color: #cbd6dc;
+  color: white;
   border: none;
-  border-radius: 50px;
-  font-family: "Work Sans";
-  font-size: 1em;
-  line-height: 16px;
-  color: #306685;
-  text-align: center;
-  padding: 10px 33px;
-  cursor: pointer;
-}
-
-.modal-content-new-photo #form-image {
-  margin-top: -36px;
-  width: 173px;
-  padding: 8px 0;
-  border: none;
-  border-radius: 50px;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.modal-content-new-photo p {
-  font-size: 0.75em;
-  line-height: 12px;
-  color: #444444;
-  padding-top: 7px;
-}
-
-#modal-edit-work-form .modal-content-new-category-title {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  padding: 10px 105px 0 105px;
-}
-
-.modal-content-new-category-title input[type="text"],
-select {
-  height: 51px;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-  border: none;
-}
-
-.modal-content-new-category-title #form-title,
-#form-category {
-  color: #444444;
-  padding-left: 16px;
-  font-family: "Work Sans";
-  font-size: 1em;
-}
-
-.modal-content-new-category-title label {
-  padding-top: 20px;
-  padding-bottom: 10px;
-}
-
-.modal-content-new-category-title .border-in-second-window-of-modal {
-  margin-left: 0;
-  margin-right: 0;
-  margin-top: 45px;
-}
-
-#modal-edit-work-form input[type="submit"] {
-  border-radius: 60px;
-  margin: 30px auto 45px;
-  padding: 10px 90px;
-  border: none;
-  color: #ffffff;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 1em;
-  background-color: #a7a7a7;
-  cursor: pointer;
-}
-button#valider {
-  background-color: #1d6154;
-  color: #ffffff; /* Couleur du texte en blanc */
-  border: none;
-  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
 }
 
-button#valider:disabled {
-  background-color: #ccc; /* Couleur grisée lorsque désactivé */
+.modalAjout input[type="submit"]:disabled {
+  background-color: #ddd;
   cursor: not-allowed;
+}
+
+/*****modal2*******/
+
+.modal2 {
+  width: 600px;
+  height: 670px;
+  background-color: #fff;
+  border-radius: 15px;
+  position: relative;
+  top: 4%;
+  display: none;
+  flex-direction: column;
+}
+
+/* Autres ajustements */
+.image-container {
+  position: relative;
+}
+
+.icon-container {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.icon-container .delete-icon {
+  color: white;
+  font-size: 12px;
+  position: relative;
+  background-color: black;
+  padding: 5px;
+  border-radius: 20%;
+}
+
+.icon-container .delete-icon:hover {
+  color: #ff4d4d00; /* Optionnel : Change la couleur sur survol */
 }
