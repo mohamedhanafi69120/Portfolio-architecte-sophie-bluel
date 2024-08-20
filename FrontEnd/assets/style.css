@@ -406,7 +406,6 @@ footer nav ul {
   position: relative;
   top: 4%;
   display: flex;
-  visibility: hidden;
   flex-direction: column;
 }
 .modal1 .fa-xmark {
