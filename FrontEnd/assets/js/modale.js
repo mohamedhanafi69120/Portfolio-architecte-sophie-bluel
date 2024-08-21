@@ -210,6 +210,7 @@ function ajouPhotos(event) {
     // Lecture du fichier sélectionné
     reader.readAsDataURL(event.target.files[0]);
   }
+  fetchAndDisplayProjects();
 }
 
 // Associer la fonction `ajouPhotos` à l'événement change sur l'input file
