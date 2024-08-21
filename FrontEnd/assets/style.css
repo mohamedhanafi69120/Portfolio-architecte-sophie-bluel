@@ -371,7 +371,6 @@ footer nav ul {
   font-size: 20px;
 }
 
-/*---------------fin code modale----------------*/
 .gallery figcaption {
   margin-top: 5px;
   font-size: 16px;
@@ -569,4 +568,165 @@ footer nav ul {
 
 .icon-container .delete-icon:hover {
   color: #ff4d4d00; /* Optionnel : Change la couleur sur survol */
+}
+
+/******************modal2*******************/
+
+.modal2 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  width: 510px;
+  height: 645px;
+  z-index: 1000;
+  padding: 30px; /* Augmenté pour plus d'espace autour du contenu */
+}
+
+.modal2 i {
+  font-size: 0.8em; /* Ajusté pour mieux correspondre au design souhaité */
+}
+
+.modal2 h2 {
+  text-align: center;
+  font-size: 1.5rem; /* Taille de police pour le titre */
+  margin-bottom: 40px;
+}
+
+.modal2 h2 {
+  color: #000;
+}
+
+.modal2 form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal2img {
+  display: none;
+  width: 130px;
+
+  border-radius: 8px;
+}
+
+.modal2_text {
+  display: block; /* Assurez-vous que le texte est visible */
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 10px;
+}
+
+.title,
+.categories-select {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: #333;
+  font-weight: bold;
+}
+
+input[type="text"],
+select {
+  height: 55px;
+  border-radius: 10px;
+  border: 1px solid #ccc; /* Ajouté pour mieux définir les champs */
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.modal2imagelabel {
+  padding: 10px 20px;
+  border-radius: 40px; /* Bordures arrondies */
+  background-color: #cbd6dc; /* Couleur de fond */
+  color: #306685; /* Couleur du texte */
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.modal2_setphoto i {
+  font-size: 48px;
+  color: #b3b3b3;
+  margin-bottom: 10px;
+}
+
+.modal2_setphoto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 230px; /* Taille ajustée précédemment */
+  background-color: #e8f1f6;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 90%; /* Réduit la largeur à 90% du conteneur parent */
+  max-width: 440px; /* Vous pouvez ajouter un max-width pour limiter la largeur */
+  margin-left: auto; /* Centre l'élément horizontalement */
+  margin-right: auto; /* Centre l'élément horizontalement */
+  padding-top: 15px; /* Taille ajustée précédemment */
+  position: relative;
+  box-sizing: border-box;
+  padding-bottom: 5px; /* Taille ajustée précédemment */
+}
+
+.modal2imagelabel {
+  padding: 10px 20px;
+  border-radius: 40px;
+  background-color: #cbd6dc;
+  color: #306685;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 20px; /* Augmentez cette valeur pour ajouter plus d'espace */
+}
+.uploadfile {
+  display: none;
+}
+
+.modal2_separation {
+  margin-top: 31px;
+  margin-bottom: 20px;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.modal2 i.fa-arrow-left {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+}
+
+.modal2 i.fa-xmark {
+  position: absolute;
+  top: 20px;
+  right: 21px;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+}
+
+.modal2_setphoto input[type="file"] {
+  display: none;
+}
+
+#modal2_submit:disabled {
+  background-color: #ccc; /* Couleur lorsque le bouton est désactivé */
+  cursor: not-allowed;
+}
+
+#modal2_submit {
+  font-family: "Syne";
+  font-weight: 700;
+  color: white;
+  background-color: #b3b3b3;
+  margin: 2em auto;
+  text-align: center;
+  border-radius: 60px;
+  padding: 12px 80px;
 }

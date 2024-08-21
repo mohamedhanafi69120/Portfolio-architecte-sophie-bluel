@@ -1,4 +1,4 @@
-// /*********************login- logout******************************/
+///*********************login- logout*******************///
 
 document.addEventListener("DOMContentLoaded", function () {
   const loginLink = document.querySelector("#nav-login"); // Lien pour "login" ou "logout"
@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  //**************Récupération des traveaux************//
-  //*****Fonction pour récupérer et afficher les projets****//
+  ///**************Récupération des traveaux************///
+  ///*****Fonction pour récupérer et afficher les projets****///
 
   function fetchAndDisplayProjects(filterCategory = null) {
     fetch("http://localhost:5678/api/works")
@@ -63,8 +63,8 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => console.error("Error:", error));
   }
 
-  //********Récupération des catégories**********//
-  //*****Fonction pour récupérer et afficher les catégories******//
+  ///********Récupération des catégories**********///
+  ///*****Fonction pour récupérer et afficher les catégories******///
 
   function fetchAndDisplayCategories() {
     fetch("http://localhost:5678/api/categories")
@@ -91,8 +91,8 @@ document.addEventListener("DOMContentLoaded", function () {
           categoriesContainer.appendChild(button);
         });
 
-        // // Appeler la fonction pour remplir les catégories dans le formulaire d'ajout de photo
-        // populateCategories(categories);
+        //// Appeler la fonction pour remplir les catégories dans le formulaire d'ajout de photo////
+        // populateCategories(categories);///
       })
       .catch((error) => console.error("Error:", error));
   }
