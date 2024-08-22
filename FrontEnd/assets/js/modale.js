@@ -1,4 +1,4 @@
-/*********rappel de function pour afficher les projets dans la gallery */
+/*********rappel de function pour afficher les projets dans la gallery******/
 
 function fetchAndDisplayProjects(filterCategory = null) {
   fetch("http://localhost:5678/api/works")
@@ -9,6 +9,7 @@ function fetchAndDisplayProjects(filterCategory = null) {
       return response.json();
     })
     .then((data) => {
+      const gallery = document.querySelector(".gallery");
       gallery.innerHTML = ""; // Clear existing content
 
       data.forEach((work) => {
@@ -30,44 +31,48 @@ function fetchAndDisplayProjects(filterCategory = null) {
     .catch((error) => console.error("Error:", error));
 }
 
-/****étapes N° 1 - Gestion de la première modale (apparition/disparition)***/
+/****Étape N° 1 - Gestion de la première modale (apparition/disparition)***/
 const modalContainer = document.querySelector(".modal_container");
 modalContainer.style.display = "none";
-//***bouton "Modifier" *****//
+//***Bouton "Modifier" *****//
 const modifierBtn = document.querySelector(".btnmodal");
-/*récupération du container du modal***/
+/*Récupération du container du modal***/
 const modal1 = document.querySelector(".modal1");
 const modal2 = document.querySelector(".modal2");
-//  bouton de fermeture
+//  Bouton de fermeture
 const closeBtn = document.querySelector(".fa-xmark");
-/*********overlay***********/
+/*********Overlay***********/
 const overlay = document.querySelector(".overlay");
 
-/****récupération du bouton d'appel a la seconde modal2****/
+/****Récupération du bouton d'appel à la seconde modal2****/
 const modal1btn = document.querySelector(".modal1-btn");
 
-// bouton "Modifier"
+// Bouton "Modifier"
 modifierBtn.addEventListener("click", () => {
   modalContainer.style.display = "flex";
   overlay.style.display = "flex";
   modal1.style.display = "flex";
   generateModalGallery();
 });
-/*******bouton ajout photo*******/
+
+/*******Bouton ajout photo*******/
 modal1btn.addEventListener("click", () => {
   modal1.style.display = "none";
   modal2.style.display = "flex";
 });
 
-//  bouton de fermeture
+//  Bouton de fermeture de la première modal
 closeBtn.addEventListener("click", function () {
   modal1.style.display = "none";
   modalContainer.style.display = "none";
+  overlay.style.display = "none";
 });
-//  fermeture au click sur overlay***/
+//  Fermeture au click sur overlay
 overlay.addEventListener("click", function () {
   modal1.style.display = "none";
   modal2.style.display = "none";
+  modalContainer.style.display = "none";
+  overlay.style.display = "none";
 });
 
 // *** Gestion de la fermeture de la deuxième modale avec la croix ***
@@ -87,7 +92,7 @@ backBtnModal2.addEventListener("click", function () {
   modal1.style.display = "flex";
 });
 
-//****étapes N°-2 **Génération de la galerie dans la première modale de suppression ****//
+//****Étape N°-2 **Génération de la galerie dans la première modale de suppression ****//
 
 //****Fonction pour générer la galerie à l'intérieur de la première modale************//
 
@@ -104,6 +109,8 @@ async function generateModalGallery() {
 
     works.forEach((work) => {
       const figure = document.createElement("figure");
+      figure.dataset.workId = work.id; // Assigner l'ID du travail à l'attribut data
+
       const imageContainer = document.createElement("div");
       imageContainer.classList.add("image-container");
 
@@ -139,7 +146,7 @@ async function generateModalGallery() {
   }
 }
 
-/***étapes N°-3 *********Suppression des travaux existants *****/
+/***Étape N°-3 *********Suppression des travaux existants *****/
 
 // Fonction pour supprimer un travail avec l'ID
 
@@ -168,6 +175,7 @@ function deleteWork(workId, updateGallery) {
       return response.text();
     })
     .then(() => {
+      // Suppression instantanée dans la modal
       const modalWorkFigure = document.querySelector(
         `figure[data-work-id="${workId}"]`
       );
@@ -175,9 +183,14 @@ function deleteWork(workId, updateGallery) {
       if (modalWorkFigure) {
         modalWorkFigure.remove();
       }
+
+      // Mise à jour instantanée de la galerie principale
       if (updateGallery) {
-        generateModalGallery();
+        generateModalGallery(); // Mettre à jour la galerie de la modal
+        fetchAndDisplayProjects(); // Mettre à jour la galerie principale
       }
+
+      // Ne pas fermer la modal ici pour permettre d'autres suppressions.
     })
     .catch((error) =>
       console.error("Erreur lors de la suppression du travail :", error)
@@ -210,7 +223,6 @@ function ajouPhotos(event) {
     // Lecture du fichier sélectionné
     reader.readAsDataURL(event.target.files[0]);
   }
-  fetchAndDisplayProjects();
 }
 
 // Associer la fonction `ajouPhotos` à l'événement change sur l'input file
@@ -246,13 +258,13 @@ function ajoutProjet(event) {
   const title = document.querySelector("#title").value;
   const category = document.querySelector("#categories-select").value;
   const fileInput = document.querySelector(".uploadfile");
-  const file = fileInput.files[0]; // Correction pour récupérer le fichier sélectionné
+  const file = fileInput.files[0]; // Récupérer le fichier sélectionné
 
   // Création du formulaire pour envoyer les données à l'API
   const formData = new FormData();
   formData.append("title", title);
-  formData.append("category", category); // Correction: changer "select" en "category"
-  formData.append("image", file); // Correction pour ajouter le fichier
+  formData.append("category", category);
+  formData.append("image", file);
 
   fetch("http://localhost:5678/api/works", {
     method: "POST",
@@ -272,8 +284,36 @@ function ajoutProjet(event) {
     })
     .then((data) => {
       alert("Projet ajouté avec succès", data);
+
+      // Appeler `generateModalGallery` pour mettre à jour la galerie dans la modal
       generateModalGallery();
+
+      // Appeler `fetchAndDisplayProjects` pour mettre à jour la galerie sur la page principale
       fetchAndDisplayProjects();
+
+      // **Nouvelle partie : Réinitialisation des champs du formulaire après l'ajout**
+
+      // Réinitialiser les champs de texte et de sélection pour qu'ils soient vides
+      document.querySelector("#title").value = "";
+      document.querySelector("#categories-select").selectedIndex = 0;
+      fileInput.value = ""; // Vider le champ de fichier
+
+      // **Nouvelle partie : Vider l'aperçu de l'image dans la modal**
+
+      // Réinitialiser l'aperçu de l'image pour qu'il soit vide après l'ajout
+      const modal2img = document.querySelector(".modal2img");
+      const faImage = document.querySelector(".fa-image");
+      const modal2imagelabel = document.querySelector(".modal2imagelabel");
+      const modal2_text = document.querySelector(".modal2_text");
+
+      modal2img.src = "";
+      modal2img.style.display = "none";
+      faImage.style.display = "block";
+      modal2imagelabel.style.display = "block";
+      modal2_text.style.display = "block";
+
+      // Réinitialiser la couleur du bouton de soumission après l'ajout
+      changeColor();
     })
     .catch((error) => {
       alert(`Échec de l'ajout du projet: ${error.message}`);

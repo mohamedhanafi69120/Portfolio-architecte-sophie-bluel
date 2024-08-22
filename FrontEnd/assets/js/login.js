@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const errorMessage = document.querySelector(".loginEmail__error");
           if (errorMessage) {
             errorMessage.textContent = error.message; // Afficher l'erreur sous le champ email
+            alert("Erreur dans l’identifiant ou le mot de passe");
           }
         });
     });
