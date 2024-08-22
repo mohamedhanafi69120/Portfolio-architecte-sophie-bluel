@@ -91,7 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
           categoriesContainer.appendChild(button);
         });
 
-        //// Appeler la fonction pour remplir les catégories dans le formulaire d'ajout de photo////
         // populateCategories(categories);///
       })
       .catch((error) => console.error("Error:", error));
