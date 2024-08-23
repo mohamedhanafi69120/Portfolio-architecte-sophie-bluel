@@ -1,4 +1,4 @@
-///*********************login- logout*******************///
+///**************traveaux************///
 
 document.addEventListener("DOMContentLoaded", function () {
   const loginLink = document.querySelector("#nav-login"); // Lien pour "login" ou "logout"
