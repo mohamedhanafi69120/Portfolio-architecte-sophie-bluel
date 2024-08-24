@@ -1,5 +1,3 @@
-///**************traveaux************///
-
 document.addEventListener("DOMContentLoaded", function () {
   const loginLink = document.querySelector("#nav-login"); // Lien pour "login" ou "logout"
   const gallery = document.querySelector(".gallery");
@@ -94,21 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // populateCategories(categories);///
       })
       .catch((error) => console.error("Error:", error));
-  }
-
-  //****Fonction pour remplir les catégories dans le formulaire d'ajout de photo*****//
-
-  function populateCategories(categories) {
-    const categorySelect = document.getElementById("photo-category");
-    categorySelect.innerHTML =
-      '<option value="" disabled selected>Sélectionnez une catégorie</option>';
-
-    categories.forEach((category) => {
-      const option = document.createElement("option");
-      option.value = category.name;
-      option.textContent = category.name;
-      categorySelect.appendChild(option);
-    });
   }
 
   // Initial fetch pour afficher tous les projets et les catégories
