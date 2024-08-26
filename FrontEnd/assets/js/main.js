@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
     loginLink.href = "login.html";
   }
 
-  ///**************Récupération des traveaux************///
   ///*****Fonction pour récupérer et afficher les projets****///
 
   function fetchAndDisplayProjects(filterCategory = null) {
@@ -53,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => console.error("Error:", error));
   }
 
-  ///********Récupération des catégories**********///
   ///*****Fonction pour récupérer et afficher les catégories******///
 
   function fetchAndDisplayCategories() {
