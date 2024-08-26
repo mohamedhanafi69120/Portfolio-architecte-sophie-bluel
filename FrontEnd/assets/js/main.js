@@ -7,25 +7,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("authToken");
 
   // Gestion de l'affichage du lien en fonction de la page
-  if (loginLink) {
-    if (window.location.pathname.endsWith("index.html")) {
-      // Page d'accueil : afficher "logout" si connecté, sinon "login"
-      if (token) {
-        loginLink.textContent = "logout";
-        loginLink.href = "#"; // Désactiver le lien par défaut
-        loginLink.addEventListener("click", function () {
-          localStorage.removeItem("authToken"); // Supprimer le token
-          window.location.href = "login.html"; // Rediriger vers la page de connexion
-        });
-      } else {
-        loginLink.textContent = "login";
-        loginLink.href = "login.html";
-      }
-    } else if (window.location.pathname.endsWith("login.html")) {
-      // Page de connexion : afficher "login" même après la connexion
-      loginLink.textContent = "login";
-      loginLink.href = "login.html";
-    }
+
+  // Page d'accueil : afficher "logout" si connecté, sinon "login"
+  if (token) {
+    loginLink.textContent = "logout";
+    loginLink.addEventListener("click", function () {
+      localStorage.removeItem("authToken"); // Supprimer le token
+      window.location.href = "login.html"; // Rediriger vers la page de connexion
+    });
+  } else {
+    loginLink.textContent = "login";
+    loginLink.href = "login.html";
   }
 
   ///**************Récupération des traveaux************///
@@ -99,24 +91,22 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchAndDisplayProjects();
     fetchAndDisplayCategories();
   }
-});
+  //******affichage des éléments en mode édition******//
 
-//******affichage des éléments en mode édition******//
+  function EditMode() {
+    const categories = document.querySelector("#categories");
+    const topbar = document.querySelector(".topbar");
+    const modifier = document.querySelector(".btnmodal");
 
-function EditMode() {
-  const token = localStorage.getItem("authToken");
-  const categories = document.querySelector("#categories");
-  const topbar = document.querySelector(".topbar");
-  const modifier = document.querySelector(".btnmodal");
-
-  if (token) {
-    categories.style.display = "none";
-    topbar.style.display = "flex";
-    modifier.style.display = "flex";
-  } else {
-    categories.style.display = "block";
-    topbar.style.display = "none";
-    modifier.style.display = "none";
+    if (token) {
+      categories.style.display = "none";
+      topbar.style.display = "flex";
+      modifier.style.display = "flex";
+    } else {
+      categories.style.display = "block";
+      topbar.style.display = "none";
+      modifier.style.display = "none";
+    }
   }
-}
-EditMode();
+  EditMode();
+});
