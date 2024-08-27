@@ -6,8 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Vérifier si le token est présent dans le localStorage
   const token = localStorage.getItem("authToken");
 
-  // Gestion de l'affichage du lien en fonction de la page
-
   // Page d'accueil : afficher "logout" si connecté, sinon "login"
   if (token) {
     loginLink.textContent = "logout";
